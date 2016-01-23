@@ -38,6 +38,7 @@ public motdcmd( id, level, cid )
 	new buffer[255];
 	formatex( buffer, charsmax( buffer ), "<center> <b> <font size = 5 color = blue >Message from admin</font><font size = 4 color = green> %s</font> </b> <p><b><u><font size = 2 color white >Mesaj</u></b>: %s <font >", szName, Arg2 );
 
-	show_motd( Player, buffer );
+	show_motd( Player, buffer, "** Admin Private Motd Message **" );
 	return PLUGIN_HANDLED;
 }
+
