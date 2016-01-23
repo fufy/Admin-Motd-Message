@@ -1,0 +1,43 @@
+#include <amxmisc>
+
+new const PLUGIN[]	= "Admin Motd Message",
+	VERSION[]	= "v1.0",
+	AUTHOR[]	= "Fuffy";
+	
+public plugin_init( )
+{
+	register_plugin
+	(
+		.plugin_name	=	PLUGIN,
+		.version	=	VERSION,
+		.author		=	AUTHOR
+	)
+	
+	register_concmd("amx_msay", "motdcmd", ADMIN_KICK, "<nume> <messaj>" );	
+}
+
+public motdcmd( id, level, cid )
+{
+	if( !cmd_access( id, level, cid, 2 ) )
+		return PLUGIN_HANDLED;
+		
+	new Arg1[34];
+	new Arg2[255];
+
+	read_argv( 1, Arg1, charsmax( Arg1 ) );
+	read_argv( 2, Arg2, charsmax( Arg2 ) );
+	
+	new Player = cmd_target(id, Arg1, 1 );
+	
+	if( !Player || !is_user_connected( Player ) )
+		return PLUGIN_HANDLED;
+		
+	new szName[32];
+	get_user_name( id, szName, charsmax( szName ) );
+		
+	new buffer[255];
+	formatex( buffer, charsmax( buffer ), "<center> <b> <font size = 5 color = blue >Message from admin</font><font size = 4 color = green> %s</font> </b> <p><b><u><font size = 2 color white >Mesaj</u></b>: %s <font >", szName, Arg2 );
+
+	show_motd( Player, buffer );
+	return PLUGIN_HANDLED;
+}
